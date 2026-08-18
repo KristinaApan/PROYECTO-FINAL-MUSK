@@ -10,6 +10,8 @@ from src.functional_utils import (
     average_sale_by_client,
     top_client_by_country,
     filter_high_spending_clients,
+    count_sales_by_client_and_category,
+    
 )
 
 
@@ -132,6 +134,20 @@ def generate_report():
         )
     ]
 
+    electronics_counts = {
+        client.name: count_sales_by_client_and_category(
+            sales,
+            client.client_id,
+            "Electronics",
+        )
+        for client in clients
+    }
+
+    top_electronics_client = max(
+        electronics_counts,
+        key=electronics_counts.get,
+    )
+
     clients_df = clients_to_dataframe(clients)
     merged = merge_clients_sales(clients_df, sales_df)
     merged_with_month = add_month_column(merged)
@@ -149,6 +165,11 @@ def generate_report():
     }
 
 
+if __name__ == "__main__":
+    report = generate_report()
+
+    with open("final_report.json", "w", encoding="utf-8") as file:
+        json.dump(report, file, indent=4, ensure_ascii=False)
 
     
 
