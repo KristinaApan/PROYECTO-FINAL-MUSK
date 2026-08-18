@@ -21,3 +21,7 @@ def total_amount_by_client(sales, client_id):
         0
     )
 
+
+def count_sales_by_client(sales, client_id):
+    """Count the number of sales made by a client."""
+    return len(filter_sales_by_client(sales, client_id))
