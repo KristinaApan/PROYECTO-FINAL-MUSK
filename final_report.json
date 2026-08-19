@@ -36,6 +36,7 @@
         "Accessories": 339.97,
         "Electronics": 2699.47
     },
+    "top_electronics_client": "Alice",
     "high_spending_clients": [
         "Alice",
         "Bob"

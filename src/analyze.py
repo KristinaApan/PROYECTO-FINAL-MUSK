@@ -160,6 +160,7 @@ def generate_report():
         "clients": client_reports,
         "top_client_by_country": top_clients,
         "sales_by_category": category_totals,
+        "top_electronics_client": top_electronics_client,
         "high_spending_clients": high_spenders,
         "monthly_sales": monthly_totals,
     }
