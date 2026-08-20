@@ -74,14 +74,17 @@ def filter_high_spending_clients(clients, sales, threshold):
     )
 
 
-def count_sales_by_client_and_category(sales, client_id, category):
-    """Count sales made by a client in a specific category."""
-    filtered_sales = filter(
-        lambda s: s.client_id == client_id and s.category == category,
-        sales
-    )
+def top_client_by_category(clients, sales, category):
+    """Find the client with the most sales in a specific category."""
+    category_sales = filter_sales_by_category(sales, category)
 
-    return len(list(filtered_sales))
+    return max(
+        clients,
+        key=lambda client: count_sales_by_client(
+            category_sales,
+            client.client_id
+        )
+    )
 
 
 def total_sales_by_month(sales):
