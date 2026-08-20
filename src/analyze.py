@@ -128,11 +128,11 @@ def generate_report():
     }
 
     high_spenders = [
-    client.name
-    for client in filter_high_spending_clients(
-        clients, sales, 500
-    )
-]
+        client.name
+        for client in filter_high_spending_clients(
+            clients, sales, 500
+        )
+    ]
 
     top_electronics_client = top_client_by_category(
         clients,
