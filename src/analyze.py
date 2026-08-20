@@ -10,7 +10,7 @@ from src.functional_utils import (
     average_sale_by_client,
     top_client_by_country,
     filter_high_spending_clients,
-    count_sales_by_client_and_category,
+    top_client_by_category,
     
 )
 
@@ -128,25 +128,17 @@ def generate_report():
     }
 
     high_spenders = [
-        client.name
-        for client in filter_high_spending_clients(
-            clients, sales, 500
-        )
-    ]
-
-    electronics_counts = {
-        client.name: count_sales_by_client_and_category(
-            sales,
-            client.client_id,
-            "Electronics",
-        )
-        for client in clients
-    }
-
-    top_electronics_client = max(
-        electronics_counts,
-        key=electronics_counts.get,
+    client.name
+    for client in filter_high_spending_clients(
+        clients, sales, 500
     )
+]
+
+    top_electronics_client = top_client_by_category(
+        clients,
+        sales,
+        "Electronics",
+    ).name
 
     clients_df = clients_to_dataframe(clients)
     merged = merge_clients_sales(clients_df, sales_df)
@@ -156,14 +148,14 @@ def generate_report():
     monthly_totals = monthly_sales(merged_with_month)
 
     return {
-        "summary": summary,
-        "clients": client_reports,
-        "top_client_by_country": top_clients,
-        "sales_by_category": category_totals,
-        "top_electronics_client": top_electronics_client,
-        "high_spending_clients": high_spenders,
-        "monthly_sales": monthly_totals,
-    }
+       "summary": summary,
+       "clients": client_reports,
+       "top_client_by_country": top_clients,
+       "sales_by_category": category_totals,
+       "top_electronics_client": top_electronics_client,
+       "high_spending_clients": high_spenders,
+       "monthly_sales": monthly_totals,
+}
 
 
 if __name__ == "__main__":
