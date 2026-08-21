@@ -16,7 +16,7 @@ from src.functional_utils import (
 
 
 def load_clients(path):
-    """Load clients from a JSON file."""
+    """Carga los clientes desde un archivo JSON."""
     with open(path, "r", encoding="utf-8") as file:
         data = json.load(file)
 
@@ -24,7 +24,7 @@ def load_clients(path):
 
 
 def load_sales(path):
-    """Load sales from a CSV file into a DataFrame."""
+    """Carga las ventas desde un archivo CSV en un DataFrame."""
     df = pd.read_csv(path)
 
     df["date"] = pd.to_datetime(df["date"])
@@ -33,12 +33,12 @@ def load_sales(path):
 
 
 def clients_to_dataframe(clients):
-    """Convert clients to a Pandas DataFrame."""
+    """Convierte los clientes en un DataFrame de Pandas."""
     return pd.DataFrame([client.to_dict() for client in clients])
 
 
 def merge_clients_sales(clients_df, sales_df):
-    """Merge client and sales data."""
+    """Combina los datos de clientes y ventas."""
     return clients_df.merge(
         sales_df,
         on="client_id",
@@ -47,14 +47,14 @@ def merge_clients_sales(clients_df, sales_df):
 
 
 def add_month_column(df):
-    """Add a year-month period column to sales data."""
+    """Añade una columna con el año y mes de cada venta."""
     result = df.copy()
     result["month"] = result["date"].dt.to_period("M")
     return result
 
 
 def monthly_sales(merged_df):
-    """Calculate total sales grouped by month."""
+    """Calcula el total de ventas agrupadas por mes."""
     return ( 
         merged_df
         .groupby("month")["amount"]
@@ -65,7 +65,7 @@ def monthly_sales(merged_df):
 
 
 def sales_by_category(sales_df):
-    """Calculate total sales grouped by category."""
+    """Calcula el total de ventas agrupadas por categoría."""
     return (
         sales_df
         .groupby("category")["amount"]
@@ -76,7 +76,7 @@ def sales_by_category(sales_df):
 
 
 def sales_to_objects(sales_df):
-    """Convert a sales DataFrame to a list of Sale objects."""
+    """Convierte un DataFrame de ventas en una lista de objetos Sale."""
     return [
         Sale(
             sale_id=row.sale_id,
@@ -91,7 +91,7 @@ def sales_to_objects(sales_df):
 
 
 def generate_report():
-    """Generate the complete sales analysis report."""
+    """Genera el informe completo de análisis de ventas."""
     clients = load_clients("data/clients.json")
     sales_df = load_sales("data/sales.csv")
     sales = sales_to_objects(sales_df)
@@ -164,6 +164,6 @@ if __name__ == "__main__":
     with open("final_report.json", "w", encoding="utf-8") as file:
         json.dump(report, file, indent=4, ensure_ascii=False)
 
+
     
 
-  
