@@ -2,17 +2,17 @@ from functools import reduce
 
 
 def filter_sales_by_category(sales, category):
-    """Filter sales by category."""
+    """Filtra las ventas por categoría."""
     return list(filter(lambda s: s.category == category, sales))
 
 
 def filter_sales_by_client(sales, client_id):
-    """Filter sales by client ID."""
+    """Filtra las ventas por ID de cliente."""
     return list(filter(lambda s: s.client_id == client_id, sales))
 
 
 def total_amount_by_client(sales, client_id):
-    """Calculate the total amount spent by a client."""
+    """Calcula el importe total gastado por un cliente."""
     client_sales = filter_sales_by_client(sales, client_id)
 
     return reduce(
@@ -23,12 +23,12 @@ def total_amount_by_client(sales, client_id):
 
 
 def count_sales_by_client(sales, client_id):
-    """Count the number of sales made by a client."""
+    """Cuenta el número de ventas realizadas por un cliente."""
     return len(filter_sales_by_client(sales, client_id))
 
 
 def average_sale_by_client(sales, client_id):
-    """Calculate the average sale amount for a client."""
+    """Calcula el importe medio de las ventas de un cliente."""
     total = total_amount_by_client(sales, client_id)
     count = count_sales_by_client(sales, client_id)
 
@@ -39,12 +39,12 @@ def average_sale_by_client(sales, client_id):
 
 
 def filter_clients_by_country(clients, country):
-    """Filter clients by country."""
+    """Filtra los clientes por país."""
     return list(filter(lambda c: c.country == country, clients))
 
 
 def top_client_by_country(clients, sales, country):
-    """Find the client with the highest total spending in a country."""
+    """Encuentra el cliente con mayor gasto total de un país."""
     country_clients = filter_clients_by_country(clients, country)
 
     return max(
@@ -54,7 +54,7 @@ def top_client_by_country(clients, sales, country):
 
 
 def total_amount_by_category(sales, category):
-    """Calculate the total amount of sales in a category."""
+    """Calcula el importe total de las ventas de una categoría."""
     category_sales = filter_sales_by_category(sales, category)
 
     return reduce(
@@ -65,7 +65,7 @@ def total_amount_by_category(sales, category):
 
 
 def filter_high_spending_clients(clients, sales, threshold):
-    """Filter clients whose total spending is above a threshold."""
+    """Filtra los clientes cuyo gasto total supera un umbral."""
     return list(
         filter(
             lambda c: total_amount_by_client(sales, c.client_id) > threshold,
@@ -75,7 +75,7 @@ def filter_high_spending_clients(clients, sales, threshold):
 
 
 def top_client_by_category(clients, sales, category):
-    """Find the client with the most sales in a specific category."""
+    """Encuentra el cliente con más ventas de una categoría específica."""
     category_sales = filter_sales_by_category(sales, category)
 
     return max(
@@ -88,7 +88,7 @@ def top_client_by_category(clients, sales, category):
 
 
 def total_sales_by_month(sales):
-    """Calculate total sales grouped by month."""
+    """Calcula el total de ventas agrupadas por mes."""
     return reduce(
         lambda totals, sale: {
             **totals,
